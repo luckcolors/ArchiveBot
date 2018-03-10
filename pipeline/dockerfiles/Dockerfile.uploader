@@ -1,0 +1,15 @@
+FROM debian:stretch
+LABEL maintainer="https://github.com/luckcolors"
+
+ENV RSYNC_URL=rsync://fos.textfiles.com/archivebot/
+
+RUN apt update && \
+    apt-get install -y --no-install-recommends rsync python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip3 install --user requests
+WORKDIR /
+ADD https://raw.githubusercontent.com/ArchiveTeam/ArchiveBot/master/uploader/uploader.py /
+VOLUME /warcs4fos
+WORKDIR /warcs4fos
+
+CMD python3 /uploader.py /warcs4fos
